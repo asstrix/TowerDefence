@@ -39,6 +39,7 @@ class Tower(pygame.sprite.Sprite):
             if target:
                 self.rotate_towards_target(target)
                 self.shoot(target, bullets_group)
+                pygame.mixer.Sound(self.game.settings.shoot_sound).play()
                 self.last_shot_time = current_time
 
     def is_hovered(self, mouse_pos):

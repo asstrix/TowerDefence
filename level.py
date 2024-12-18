@@ -33,6 +33,7 @@ class Level:
             new_enemy = Enemy(**enemy_info, game=self.game)
             self.enemies.add(new_enemy)
             self.spawned_enemies += 1
+            pygame.mixer.Sound(self.game.settings.enemy_appear).play()
 
     def attempt_place_tower(self, mouse_pos, tower_type):
         tower_classes = {'basic': BasicTower, 'sniper': SniperTower}

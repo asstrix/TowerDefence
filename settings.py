@@ -29,6 +29,7 @@ class Settings:
         self.upgrade_sound = 'assets/sounds/upgrade.wav'
         self.sell_sound = 'assets/sounds/sell.wav'
         self.enemy_hit_sound = 'assets/sounds/enemy_hit.wav'
+        self.enemy_appear = 'assets/sounds/enemy_appear.wav'
         self.background_music = 'assets/sounds/background_music.mp3'
 
         self.starting_money = 500

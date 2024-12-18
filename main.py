@@ -4,6 +4,7 @@ from settings import Settings
 from level import Level
 from grid import Grid
 
+
 class TowerDefenseGame:
     def __init__(self):
         pygame.init()
@@ -78,12 +79,12 @@ class TowerDefenseGame:
         if self.hide_towers:
             self.settings.tower_positions = []
             self.hide_towers = 0
-            print("Tower positions are hidden")
+            print("Tower positions are hidden.")
         else:
             self.settings.tower_positions = [(x * self.settings.grid_size[0] + self.settings.grid_size[0] // 2, y * self.settings.grid_size[1] + self.settings.grid_size[1] // 2)
                                  for x in range(1, self.settings.cols) for y in range(3, self.settings.rows)]
             self.hide_towers = 1
-            print("Tower positions are shown")
+            print("Tower positions are shown.")
 
     def _draw(self):
         if self.is_game_over:
