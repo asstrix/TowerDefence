@@ -22,7 +22,6 @@ class TowerDefenseGame:
 
         self.font = pygame.font.SysFont("Arial", 24)
 
-        self.shoot_sound = pygame.mixer.Sound(self.settings.shoot_sound)
         self.selected_tower_type = 'basic'
         self.is_game_over = False
         self.hide_towers = 0
