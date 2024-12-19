@@ -37,7 +37,8 @@ class Tower(pygame.sprite.Sprite):
         if current_time - self.last_shot_time > self.rate_of_fire:
             target = self.find_target(enemies)
             if target:
-                self.rotate_towards_target(target)
+                if not isinstance(self, FreezingTower):
+                    self.rotate_towards_target(target)
                 self.shoot(target, bullets_group)
                 pygame.mixer.Sound(self.game.settings.shoot_sound).play()
                 self.last_shot_time = current_time
@@ -111,3 +112,18 @@ class SniperTower(Tower):
     def shoot(self, target, bullets_group):
         new_bullet = Bullet(self.position, target.position, self.damage, self.game)
         bullets_group.add(new_bullet)
+
+
+class FreezingTower(Tower):
+    def __init__(self, position, game):
+        super().__init__(position, game)
+        self.image = pygame.image.load('assets/towers/freezing_tower.png').convert_alpha()
+        # self.image = pygame.transform.rotate(self.image, 90)
+        self.original_image = self.image
+        self.rect = self.image.get_rect(center=self.position)
+        self.tower_range = 300
+        self.damage = 5
+        self.rate_of_fire = 2000
+
+    def freeze(self):
+        pass

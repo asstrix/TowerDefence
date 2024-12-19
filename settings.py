@@ -16,10 +16,12 @@ class Settings:
             (50, 400), (300, 400), (300, 200), (600, 200),
             (600, 600), (900, 600), (900, 300), (1150, 300)
         ]
+        self.enemy_health_indicator = {'colors': [(0, 255, 0), (255, 255, 255)], 'width': 100, 'height': 10}
 
         self.tower_sprites = {
             'basic': 'assets/towers/basic_tower.png',
             'sniper': 'assets/towers/sniper_tower.png',
+            'freezer': 'assets/towers/freezing_tower.png',
         }
         self.enemy_sprite = 'assets/enemies/basic_enemy.png'
         self.bullet_sprite = 'assets/bullets/basic_bullet.png'

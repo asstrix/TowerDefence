@@ -46,6 +46,9 @@ class TowerDefenseGame:
                 elif event.key == pygame.K_2:
                     self.selected_tower_type = 'sniper'
                     print("Selected sniper tower.")
+                elif event.key == pygame.K_3:
+                    self.selected_tower_type = 'freezer'
+                    print("Selected freezing tower.")
                 elif event.key == pygame.K_SPACE:
                     self.hide_tower_positions()
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
