@@ -14,12 +14,14 @@ class Enemy(pygame.sprite.Sprite):
 		self.path_index = 0
 		self.speed = speed
 		self.health = health
+		self.max_health = health
 		self.position = Vector2(path[0])
 		self.rect.center = self.position
-		self.health_indicator = pygame.Rect(self.position[0] - self.health // 2, self.position[1] - 30 - 20, self.health, 10)
+		self.health_indicator = pygame.Rect(self.position[0], self.position[1], 30, 5)
 
 	def take_damage(self, amount, speed=0):
 		self.health -= amount
+		self.health_indicator.width = int(30 * (self.health / self.max_health))
 		if self.health <= 0:
 			self.kill()
 			self.game.settings.starting_money += 20
@@ -40,3 +42,8 @@ class Enemy(pygame.sprite.Sprite):
 				self.game.game_over()
 				self.kill()
 
+		self.health_indicator.x = self.position[0] - 15
+		self.health_indicator.y = self.position[1] - 20
+
+	def draw_health_indicator(self, screen):
+		pygame.draw.rect(screen, (0, 255, 0), self.health_indicator)

@@ -85,6 +85,8 @@ class Level:
     def draw(self, screen):
         self.draw_path(screen)
         self.enemies.draw(screen)
+        for enemy in self.enemies:
+            enemy.draw_health_indicator(screen)
         self.towers.draw(screen)
         self.bullets.draw(screen)
         mouse_pos = pygame.mouse.get_pos()
