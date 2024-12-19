@@ -3,7 +3,7 @@ from pygame.math import Vector2
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, start_pos, target_pos, damage, game):
+    def __init__(self, start_pos, target_pos, damage, game, tower=None):
         super().__init__()
         self.game = game
         self.image = pygame.image.load('assets/bullets/basic_bullet.png').convert_alpha()
@@ -13,6 +13,7 @@ class Bullet(pygame.sprite.Sprite):
         self.speed = 5
         self.damage = damage
         self.velocity = self.calculate_velocity()
+        self.tower = tower
 
     def calculate_velocity(self):
         direction = (self.target - self.position).normalize()

@@ -88,7 +88,9 @@ class Level:
         for enemy in self.enemies:
             enemy.draw_health_indicator(screen)
         self.towers.draw(screen)
-        self.bullets.draw(screen)
+        for bullet in self.bullets:
+            if not isinstance(bullet.tower, FreezingTower):
+                screen.blit(bullet.image, bullet.rect)
         mouse_pos = pygame.mouse.get_pos()
         for tower in self.towers:
             tower.draw(screen)

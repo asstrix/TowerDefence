@@ -39,8 +39,8 @@ class Tower(pygame.sprite.Sprite):
             if target:
                 if not isinstance(self, FreezingTower):
                     self.rotate_towards_target(target)
+                    pygame.mixer.Sound(self.game.settings.shoot_sound).play()
                 self.shoot(target, bullets_group)
-                pygame.mixer.Sound(self.game.settings.shoot_sound).play()
                 self.last_shot_time = current_time
 
     def is_hovered(self, mouse_pos):
@@ -118,12 +118,12 @@ class FreezingTower(Tower):
     def __init__(self, position, game):
         super().__init__(position, game)
         self.image = pygame.image.load('assets/towers/freezing_tower.png').convert_alpha()
-        # self.image = pygame.transform.rotate(self.image, 90)
         self.original_image = self.image
         self.rect = self.image.get_rect(center=self.position)
-        self.tower_range = 300
+        self.tower_range = 50
         self.damage = 5
         self.rate_of_fire = 2000
 
-    def freeze(self):
-        pass
+    def shoot(self, target, bullets_group):
+        new_bullet = Bullet(self.position, target.position, self.damage, self.game, tower=self)
+        bullets_group.add(new_bullet)

@@ -13,6 +13,7 @@ class Enemy(pygame.sprite.Sprite):
 		self.path = path
 		self.path_index = 0
 		self.speed = speed
+		self.default_speed = speed
 		self.health = health
 		self.max_health = health
 		self.position = Vector2(path[0])
@@ -27,6 +28,18 @@ class Enemy(pygame.sprite.Sprite):
 			self.game.settings.starting_money += 20
 
 	def update(self):
+		freezing_range = False
+		for tower in self.game.level.towers:
+			if tower.__class__.__name__ == "FreezingTower":
+				distance_to_tower = self.position.distance_to(Vector2(tower.rect.center))
+				if distance_to_tower <= tower.tower_range:
+					freezing_range = True
+					break
+		if freezing_range:
+			self.speed = self.default_speed - 0.7
+		else:
+			self.speed = self.default_speed
+
 		if self.path_index < len(self.path) - 1:
 			start_point = Vector2(self.path[self.path_index])
 			end_point = Vector2(self.path[self.path_index + 1])
