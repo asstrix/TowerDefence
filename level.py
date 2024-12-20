@@ -31,7 +31,6 @@ class Level:
     def spawn_next_enemy(self):
         if self.spawned_enemies < len(self.waves[self.current_wave]):
             enemy_info = self.waves[self.current_wave][self.spawned_enemies]
-            print(enemy_info)
             new_enemy = Enemy(**enemy_info, game=self.game)
             self.enemies.add(new_enemy)
             self.spawned_enemies += 1
