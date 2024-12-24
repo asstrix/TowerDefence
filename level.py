@@ -45,7 +45,6 @@ class Level:
                 self.game.settings.starting_money -= self.game.settings.tower_cost
                 new_tower = tower_classes[tower_type](grid_pos, self.game)
                 self.towers.add(new_tower)
-                print(f"self.towers: {self.towers}")
                 print("Tower placed.")
             else:
                 print("Invalid position for tower.")
