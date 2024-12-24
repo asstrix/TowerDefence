@@ -52,8 +52,14 @@ class TowerDefenseGame:
                 elif event.key == pygame.K_SPACE:
                     self.hide_tower_positions()
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                mouse_pos = pygame.mouse.get_pos()
+                for tower in self.level.towers:
+                    if tower.upgrade_arrow_rect and tower.upgrade_arrow_rect.collidepoint(mouse_pos):
+                        tower.upgrade(tower)
+                        break
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                mouse_pos = pygame.mouse.get_pos()
                 if self.selected_tower_type:
-                    mouse_pos = pygame.mouse.get_pos()
                     self.level.attempt_place_tower(mouse_pos, self.selected_tower_type)
                 else:
                     print("No tower type selected.")

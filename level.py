@@ -41,9 +41,11 @@ class Level:
         if tower_type in tower_classes and self.game.settings.starting_money >= self.game.settings.tower_cost:
             grid_pos = self.game.grid.get_grid_position(mouse_pos)
             if self.game.grid.is_spot_available(grid_pos):
+                self.game.grid.available_spots.remove(grid_pos)
                 self.game.settings.starting_money -= self.game.settings.tower_cost
                 new_tower = tower_classes[tower_type](grid_pos, self.game)
                 self.towers.add(new_tower)
+                print(f"self.towers: {self.towers}")
                 print("Tower placed.")
             else:
                 print("Invalid position for tower.")
@@ -97,6 +99,6 @@ class Level:
         for tower in self.towers:
             tower.draw(screen)
             if tower.is_hovered(mouse_pos):
-                tower_stats_text = self.font.render(f"Damage: {tower.damage}, Range: {tower.tower_range}", True,
+                tower_stats_text = self.font.render(f"Damage: {round(tower.damage)}, Range: {tower.tower_range}", True,
                                                     (255, 255, 255))
                 screen.blit(tower_stats_text, (tower.rect.x, tower.rect.y - 20))

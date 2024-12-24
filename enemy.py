@@ -20,7 +20,7 @@ class Enemy(pygame.sprite.Sprite):
 		self.rect.center = self.position
 		self.health_indicator = pygame.Rect(self.position[0], self.position[1], 30, 5)
 
-	def take_damage(self, amount, speed=0):
+	def take_damage(self, amount):
 		self.health -= amount
 		self.health_indicator.width = int(30 * (self.health / self.max_health))
 		if self.health <= 0:
@@ -36,7 +36,7 @@ class Enemy(pygame.sprite.Sprite):
 					freezing_range = True
 					break
 		if freezing_range:
-			self.speed = self.default_speed - 0.7
+			self.speed = self.default_speed - 0.2
 		else:
 			self.speed = self.default_speed
 

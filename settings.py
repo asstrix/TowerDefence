@@ -48,3 +48,4 @@ class Settings:
 
         self.tower_positions = [(x * self.grid_size[0] + self.grid_size[0] // 2, y * self.grid_size[1] + self.grid_size[1] // 2)
                                 for x in range(1, self.cols) for y in range(3, self.rows)]
+        print(self.tower_positions)

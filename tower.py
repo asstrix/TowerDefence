@@ -17,9 +17,10 @@ class Tower(pygame.sprite.Sprite):
         self.last_shot_time = pygame.time.get_ticks()
         self.level = 1
         self.original_image = self.image
+        self.upgrade_arrow_rect = None
 
     def upgrade_cost(self):
-        return 100 * self.level
+        return 50 * self.level
 
     def draw(self, screen):
         mouse_pos = pygame.mouse.get_pos()
@@ -32,6 +33,10 @@ class Tower(pygame.sprite.Sprite):
 
             screen.blit(level_text, level_text_pos)
             screen.blit(upgrade_cost_text, upgrade_cost_pos)
+        if self.game.settings.starting_money > self.upgrade_cost() and self.level < 2:
+            upgrade_arrow_img = pygame.image.load('assets/towers/level_up.png').convert_alpha()
+            self.upgrade_arrow_rect = upgrade_arrow_img.get_rect(center=(self.position.x + 30, self.position.y - 30))
+            screen.blit(upgrade_arrow_img, self.upgrade_arrow_rect)
 
     def update(self, enemies, current_time, bullets_group):
         if current_time - self.last_shot_time > self.rate_of_fire:
@@ -70,8 +75,20 @@ class Tower(pygame.sprite.Sprite):
                 min_distance = distance
         return nearest_enemy
 
-    def upgrade(self):
+    def upgrade(self, tower):
         self.level += 1
+        self.game.settings.starting_money -= self.upgrade_cost()
+        if isinstance(tower, (BasicTower, SniperTower, FreezingTower)):
+            tower.damage *= 1.2
+            tower.rate_of_fire *= 0.8
+        if isinstance(tower, BasicTower):
+            tower.image = pygame.image.load('assets/towers/basic_tower2.png').convert_alpha()
+            tower.original_image = tower.image
+        if isinstance(tower, SniperTower):
+            tower.image = pygame.image.load('assets/towers/sniper_tower2.png').convert_alpha()
+            tower.original_image = tower.image
+        if isinstance(tower, FreezingTower):
+            tower.tower_range *= 1.2
 
 
 class BasicTower(Tower):
@@ -127,3 +144,4 @@ class FreezingTower(Tower):
     def shoot(self, target, bullets_group):
         new_bullet = Bullet(self.position, target.position, self.damage, self.game, tower=self)
         bullets_group.add(new_bullet)
+
