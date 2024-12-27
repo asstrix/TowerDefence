@@ -1,4 +1,5 @@
-import pygame, random
+import pygame
+from random import choice, choices
 from enemy import Enemy
 from tower import BasicTower, SniperTower, FreezingTower
 
@@ -12,13 +13,28 @@ class Level:
         self.enemy = [
             {'speed': 1, 'health': 100, 'image_path': 'assets/enemies/basic_enemy.png'},
             {'speed': 1.5, 'health': 150, 'image_path': 'assets/enemies/fast_enemy.png'},
-            {'speed': 0.75, 'health': 200, 'image_path': 'assets/enemies/strong_enemy.png'}
+            {'speed': 0.75, 'health': 200, 'image_path': 'assets/enemies/strong_enemy.png'},
+            {'speed': 0.65, 'health': 250, 'image_path': 'assets/enemies/strong_enemy.png'},
         ]
-        self.random_path = random.choice(self.game.settings.enemy_path)
         self.waves = [
-            [{'path': self.random_path, **enemy} for enemy in random.choices(self.enemy, weights=[3, 2, 0], k=5)],
-            [{'path': self.random_path, **enemy} for enemy in random.choices(self.enemy, weights=[2, 2, 1], k=7)],
-            [{'path': self.random_path, **enemy} for enemy in random.choices(self.enemy, weights=[1, 2, 1], k=4)]
+            [{'path': path, **enemy} for path in [choice(self.game.settings.enemy_path)] for enemy in
+             choices(self.enemy, weights=[3, 2, 0, 0], k=5)],
+            [{'path': path, **enemy} for path in [choice(self.game.settings.enemy_path)] for enemy in
+             choices(self.enemy, weights=[2, 2, 1, 0], k=7)],
+            [{'path': path, **enemy} for path in [choice(self.game.settings.enemy_path)] for enemy in
+             choices(self.enemy, weights=[1, 1, 1, 1], k=4)],
+            [{'path': path, **enemy} for path in [choice(self.game.settings.enemy_path)] for enemy in
+             choices(self.enemy, weights=[0, 1, 2, 2], k=5)],
+            [{'path': path, **enemy} for path in [choice(self.game.settings.enemy_path)] for enemy in
+             choices(self.enemy, weights=[0, 2, 2, 2], k=6)],
+            [{'path': path, **enemy} for path in [choice(self.game.settings.enemy_path)] for enemy in
+             choices(self.enemy, weights=[0, 1, 3, 2], k=7)],
+            [{'path': path, **enemy} for path in [choice(self.game.settings.enemy_path)] for enemy in
+             choices(self.enemy, weights=[0, 1, 2, 3], k=6)],
+            [{'path': path, **enemy} for path in [choice(self.game.settings.enemy_path)] for enemy in
+             choices(self.enemy, weights=[0, 0, 4, 2], k=6)],
+            [{'path': path, **enemy} for path in [choice(self.game.settings.enemy_path)] for enemy in
+             choices(self.enemy, weights=[0, 0, 3, 3], k=6)]
         ]
         self.current_wave = 0
         self.spawned_enemies = 0
