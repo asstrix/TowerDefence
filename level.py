@@ -1,5 +1,4 @@
-import pygame
-from random import choice
+import pygame, random
 from enemy import Enemy
 from tower import BasicTower, SniperTower, FreezingTower
 
@@ -10,10 +9,16 @@ class Level:
         self.enemies = pygame.sprite.Group()
         self.towers = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
+        self.enemy = [
+            {'speed': 1, 'health': 100, 'image_path': 'assets/enemies/basic_enemy.png'},
+            {'speed': 1.5, 'health': 150, 'image_path': 'assets/enemies/fast_enemy.png'},
+            {'speed': 0.75, 'health': 200, 'image_path': 'assets/enemies/strong_enemy.png'}
+        ]
+        self.random_path = random.choice(self.game.settings.enemy_path)
         self.waves = [
-            [{'path': choice(self.game.settings.enemy_path), 'speed': 1, 'health': 100, 'image_path': 'assets/enemies/basic_enemy.png'}] * 5,
-            [{'path':  choice(self.game.settings.enemy_path), 'speed': 1.5, 'health': 150, 'image_path': 'assets/enemies/fast_enemy.png'}] * 7,
-            [{'path':  choice(self.game.settings.enemy_path), 'speed': 0.75, 'health': 200, 'image_path': 'assets/enemies/strong_enemy.png'}] * 4,
+            [{'path': self.random_path, **enemy} for enemy in random.choices(self.enemy, weights=[3, 2, 0], k=5)],
+            [{'path': self.random_path, **enemy} for enemy in random.choices(self.enemy, weights=[2, 2, 1], k=7)],
+            [{'path': self.random_path, **enemy} for enemy in random.choices(self.enemy, weights=[1, 2, 1], k=4)]
         ]
         self.current_wave = 0
         self.spawned_enemies = 0
