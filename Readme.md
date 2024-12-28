@@ -118,3 +118,5 @@ tower-defense-game/
 └── bullet.py # Handles bullet movement and behavior
 ```
 ## ScreenShots
+### Main grid:
+![login](https://github.com/asstrix/files/blob/main/TowerDefense/gui.png)
