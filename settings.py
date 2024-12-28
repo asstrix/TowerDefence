@@ -1,5 +1,42 @@
 class Settings:
+    """
+    Represents the settings for the Tower Defense Game.
+    This class stores configuration values such as screen dimensions, grid settings,
+    tower costs, enemy paths, sprite assets, and game sounds.
+    """
     def __init__(self):
+        """
+        Initialize the game's settings.
+        Attributes:
+            screen_width (int): Width of the game screen in pixels.
+            screen_height (int): Height of the game screen in pixels.
+            bg_color (tuple): Background color of the screen (RGB format).
+            rows (int): Number of rows in the grid.
+            cols (int): Number of columns in the grid.
+            grid_size (tuple): Size of each grid cell (width, height).
+            tower_cost (int): Cost to place a new tower.
+            tower_upgrade_cost (int): Cost to upgrade a tower.
+            tower_sell_percentage (float): Percentage of the original cost received when selling a tower.
+            enemy_path (list): Predefined paths for enemies to follow. Each path is a list of (x, y) coordinates.
+            enemy_health_indicator (dict): Settings for enemy health indicators, including:
+                - 'colors' (list): Colors for the health bar (start and background).
+                - 'width' (int): Width of the health bar in pixels.
+                - 'height' (int): Height of the health bar in pixels.
+            tower_sprites (dict): Dictionary mapping tower types to their sprite file paths.
+            enemy_sprite (str): File path for the default enemy sprite.
+            bullet_sprite (str): File path for the bullet sprite.
+            background_image (str): File path for the background image.
+            shoot_sound (str): File path for the sound played when a tower shoots.
+            upgrade_sound (str): File path for the sound played when a tower is upgraded.
+            sell_sound (str): File path for the sound played when a tower is sold.
+            enemy_hit_sound (str): File path for the sound played when an enemy is hit.
+            enemy_appear (str): File path for the sound played when an enemy spawns.
+            background_music (str): File path for the background music.
+            starting_money (int): Initial amount of money available to the player.
+            lives (int): Number of lives the player starts with.
+            tower_positions (list): List of available positions for placing towers, calculated
+                based on the grid size and grid dimensions.
+        """
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (230, 230, 230)

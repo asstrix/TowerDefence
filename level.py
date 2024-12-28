@@ -5,7 +5,29 @@ from tower import BasicTower, SniperTower, FreezingTower
 
 
 class Level:
+    """
+    Represents a game level, managing enemies, towers, bullets, and waves.
+    This class handles spawning enemies, placing towers, managing bullets,
+    and updating the state of the game level during gameplay.
+    """
     def __init__(self, game):
+        """
+        Initialize the level.
+        Args:
+            game: Reference to the main game instance.
+        Attributes:
+            enemies (pygame.sprite.Group): Group containing all enemies in the level.
+            towers (pygame.sprite.Group): Group containing all towers in the level.
+            bullets (pygame.sprite.Group): Group containing all bullets in the level.
+            enemy (list): List of enemy templates with their attributes.
+            waves (list): List of waves, each containing enemy instances with paths.
+            current_wave (int): Index of the current wave.
+            spawned_enemies (int): Number of enemies spawned in the current wave.
+            spawn_delay (int): Time delay between spawning enemies in milliseconds.
+            last_spawn_time (int): Time when the last enemy was spawned.
+            all_waves_complete (bool): Indicates if all waves are completed.
+            font (pygame.font.Font): Font used for rendering tower stats.
+        """
         self.game = game
         self.enemies = pygame.sprite.Group()
         self.towers = pygame.sprite.Group()
@@ -45,11 +67,20 @@ class Level:
         self.font = pygame.font.SysFont("Arial", 24)
 
     def start_next_wave(self):
+        """
+        Start the next wave of enemies.
+        Resets the enemy spawn counter and begins spawning enemies for the next wave.
+        """
         if self.current_wave < len(self.waves):
             self.spawned_enemies = 0
             self.spawn_next_enemy()
 
     def spawn_next_enemy(self):
+        """
+        Spawn the next enemy in the current wave.
+        Retrieves enemy data from the current wave and adds the enemy to the game.
+        Plays a sound effect when an enemy spawns.
+        """
         if self.spawned_enemies < len(self.waves[self.current_wave]):
             enemy_info = self.waves[self.current_wave][self.spawned_enemies]
             new_enemy = Enemy(**enemy_info, game=self.game)
@@ -58,6 +89,14 @@ class Level:
             pygame.mixer.Sound(self.game.settings.enemy_appear).play()
 
     def attempt_place_tower(self, mouse_pos, tower_type):
+        """
+        Attempt to place a tower at the given position.
+        Checks if the player has enough money and the spot is available. Deducts the
+        tower cost if placement is successful.
+        Args:
+            mouse_pos (tuple): The position of the mouse click.
+            tower_type (str): The type of tower to place (e.g., 'basic', 'sniper', 'freezer').
+        """
         tower_classes = {'basic': BasicTower, 'sniper': SniperTower, 'freezer': FreezingTower}
         if tower_type in tower_classes and self.game.settings.starting_money >= self.game.settings.tower_cost:
             grid_pos = self.game.grid.get_grid_position(mouse_pos)
@@ -73,6 +112,11 @@ class Level:
             print("Not enough money or unknown tower type.")
 
     def update(self):
+        """
+        Update the state of the level.
+        Spawns enemies, updates positions of enemies and bullets, handles collisions,
+        and checks for wave completion.
+        """
         current_time = pygame.time.get_ticks()
 
         if self.current_wave < len(self.waves) and self.spawned_enemies < len(self.waves[self.current_wave]):
@@ -101,12 +145,23 @@ class Level:
             self.all_waves_complete = True
 
     def draw_path(self, screen):
+        """
+        Draw the enemy paths and tower positions.
+        Args:
+            screen: The game screen to draw on.
+        """
         for i in self.game.settings.enemy_path:
             pygame.draw.lines(screen, (0, 128, 0), False, i, 5)
         for pos in self.game.settings.tower_positions:
             pygame.draw.circle(screen, (128, 0, 0), pos, 10)
 
     def draw(self, screen):
+        """
+        Render the level on the screen.
+        This includes enemy paths, enemies, towers, bullets, and stats.
+        Args:
+            screen: The game screen to draw on.
+        """
         self.draw_path(screen)
         self.enemies.draw(screen)
         for enemy in self.enemies:

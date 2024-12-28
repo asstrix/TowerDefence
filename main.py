@@ -7,6 +7,12 @@ from grid import Grid
 
 class TowerDefenseGame:
     def __init__(self):
+        """
+        Initialize the Tower Defense Game.
+        This method sets up the game settings, screen, background, levels, and
+        other game components. It also initializes fonts, selected tower type,
+        and game-over state.
+        """
         pygame.init()
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
@@ -35,6 +41,11 @@ class TowerDefenseGame:
         return 0 <= pos.x <= self.settings.screen_width and 0 <= pos.y <= self.settings.screen_height
 
     def _check_events(self):
+        """
+        Handle user input and events.
+        This method processes events like quitting the game, selecting tower types,
+        hiding/showing tower positions, and placing or upgrading towers.
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -65,16 +76,29 @@ class TowerDefenseGame:
                     print("No tower type selected.")
 
     def _update_game(self):
+        """
+           Update the state of the game.
+           This method updates the level and grid, including enemy movements,
+           bullet interactions, and tower states.
+           """
         self.level.update()
         self.grid.update()
 
     def _draw_win_screen(self):
+        """
+        Display the win screen.
+        Renders a message indicating that the player has won the game.
+        """
         win_text = "You Win!"
         win_render = self.font.render(win_text, True, (255, 215, 0))
         win_rect = win_render.get_rect(center=(self.settings.screen_width/2, self.settings.screen_height/2))
         self.screen.blit(win_render, win_rect)
 
     def _draw_game_over_screen(self):
+        """
+        Display the game-over screen.
+        Renders a message indicating that the player has lost the game.
+        """
         self.screen.fill((0, 0, 0))
 
         game_over_text = "Game Over!"
@@ -84,6 +108,10 @@ class TowerDefenseGame:
         self.screen.blit(game_over_render, game_over_rect)
 
     def hide_tower_positions(self):
+        """
+        Toggle the visibility of tower positions.
+        When called, this method hides or shows the positions where towers can be placed.
+        """
         if self.hide_towers:
             self.settings.tower_positions = []
             self.hide_towers = 0
@@ -95,6 +123,11 @@ class TowerDefenseGame:
             print("Tower positions are shown.")
 
     def _draw(self):
+        """
+        Render the game screen.
+        This method draws the game elements, including the background, towers, grid,
+        and game information like money, selected tower, and remaining waves or enemies.
+        """
         if self.is_game_over:
             self._draw_game_over_screen()
         else:
@@ -119,11 +152,13 @@ class TowerDefenseGame:
 
             if self.level.all_waves_complete:
                 self._draw_win_screen()
-
-
         pygame.display.flip()
 
     def run_game(self):
+        """
+        Run the main game loop.
+        Continuously processes events, updates the game state, and renders the screen.
+        """
         while True:
             self._check_events()
             self._update_game()
