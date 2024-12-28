@@ -9,7 +9,7 @@ A Python-based Tower Defense game built with the **Pygame** library. This game c
 - [Installation](#installation)
 - [How to Play](#how-to-play)
 - [Folder Structure](#folder-structure)
-- [Contributors](#contributors)
+- [Screenshots](#screenshots)
 
 ---
 
